@@ -98,29 +98,15 @@ socket.onmessage = (event) => {
 
 ## API Documentation
 
-The WebSocket API documentation can be found in the [docs/api.md](docs/api.md) file.
+TODO
 
 ## Development
 
-### Project Structure
-
-```
-clashforge/
-├── cmd/
-│   └── server/
-│       └── main.go      # Entry point
-├── internal/
-│   ├── game/            # Game logic
-│   ├── matchmaking/     # Matchmaking system
-│   ├── models/          # Data models
-│   └── websocket/       # WebSocket handling
-├── data/                # Game data from cr-csv
-└── config/              # Configuration files
-```
+TODO
 
 ### Adding New Cards
 
-1. Update the CSV data files in the `data/` directory
+1. Update the CSV data files in the `csv/` directory
 2. Restart the server to load the new card data
 
 ## Contributing
