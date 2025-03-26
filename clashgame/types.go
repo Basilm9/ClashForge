@@ -33,11 +33,11 @@ const (
     DURATION = 10
 
     // Building dimensions
-    kingBuildingWidth = 8.0 
-    kingBuildingHeight = 8.0 
+    kingBuildingWidth = 6.0 
+    kingBuildingHeight = 6.0 
 
-    princessWidth = 6.0
-    princessHeight = 7.0
+    princessWidth = 4.0
+    princessHeight = 5.0
 )
 
 type Vector struct {
@@ -53,9 +53,6 @@ type GridSystem struct {
 }
 
 const (
-    // Existing constants
-    SameTeamPushFactor    = 1.5 
-    DifferentTeamPushFactor = 0.4  
     
     // New constants for movement
     PositionHistoryLength = 5      // Increased history length

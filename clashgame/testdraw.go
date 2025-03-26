@@ -441,77 +441,6 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	return screenWidth, screenHeight
 }
 
-func (g *Game) SpawnSkeletonArmy(centerCol, centerRow, count int, team int) {
-    // Skeleton stats - smaller, faster, weaker troops
-    health := 50           // Less health than regular troops
-    damage := 20           // Lower damage
-    speed := .2          // Faster movement
-    attackRange := .1     // Shorter attack range
-    aggroDistance := 4.0   // Standard aggro distance
-    
-    // Get color based on team
-    var troopColor color.RGBA
-    if team == 0 {
-        // Team 0 skeletons (red with white tint)
-        troopColor = color.RGBA{255, 120, 120, 255}
-    } else {
-        // Team 1 skeletons (blue with white tint)
-        troopColor = color.RGBA{120, 120, 255, 255}
-    }
-    
-    // Spawn pattern radius - how far from center to place skeletons
-    spawnRadius := count / 3
-    if spawnRadius < 1 {
-        spawnRadius = 1
-    }
-    
-    // Spawn skeletons in a loose group around the center point
-    for i := 0; i < count; i++ {
-        // Calculate spread pattern
-        // Use a spiral or circular pattern to place troops
-        angle := float64(i) * (2.0 * math.Pi / float64(count))
-        distance := float64(i % spawnRadius) + 0.5
-        
-        // Calculate offset from center
-        offsetX := int(math.Round(math.Cos(angle) * distance))
-        offsetY := int(math.Round(math.Sin(angle) * distance))
-        
-        // Calculate final position, ensuring it's within grid bounds
-        spawnCol := centerCol + offsetX
-        spawnRow := centerRow + offsetY
-        
-        // Ensure spawn position is within grid bounds
-        if spawnCol < 0 {
-            spawnCol = 0
-        }
-        if spawnCol >= GridColumns {
-            spawnCol = GridColumns - 1
-        }
-        if spawnRow < 0 {
-            spawnRow = 0
-        }
-        if spawnRow >= GridRows {
-            spawnRow = GridRows - 1
-        }
-        
-        // Add a tiny random offset to health to help with collision resolution
-        randomizedHealth := health + (i % 10)
-        
-        // Spawn the troop
-        g.PlaceTroopAtCell(
-            spawnCol, 
-            spawnRow,
-            randomizedHealth,  // Health with small random variation
-            damage,            // Damage
-            speed,             // Speed (in grid cells per tick)
-            attackRange,       // Range (in grid cells)
-            aggroDistance,     // Aggro distance (in grid cells)
-            troopColor,        // Team-specific skeleton color
-            team,              // Team
-        )
-    }
-}
-
 func (g *Game) Update() error {
     if !g.IsActive() {
         return nil
@@ -561,13 +490,8 @@ func (g *Game) Update() error {
                     }
                 }
             } else {
-                // Click is in the game area - spawn troop
                 
-                // Check for Skeleton Army modifier key (Shift)
-                if ebiten.IsKeyPressed(ebiten.KeyShift) {
-                    // Spawn skeleton army (12 troops) for team 0
-                    g.SpawnSkeletonArmy(col, row, 12, 0)
-                } else if g.TroopSelection != nil && g.TroopSelection.SelectedTroop != "" {
+                if g.TroopSelection != nil && g.TroopSelection.SelectedTroop != "" {
                     // Use selected troop from the troop selection system
                     g.TroopSelection.DeploySelectedTroop(g, col, row, 0)
                 } else {
@@ -622,11 +546,7 @@ func (g *Game) Update() error {
             } else {
                 // Click is in the game area - spawn troop
                 
-                // Check for Skeleton Army modifier key (Shift)
-                if ebiten.IsKeyPressed(ebiten.KeyShift) {
-                    // Spawn skeleton army (12 troops) for team 1
-                    g.SpawnSkeletonArmy(col, row, 12, 1)
-                } else if g.TroopSelection != nil && g.TroopSelection.SelectedTroop != "" {
+                if g.TroopSelection != nil && g.TroopSelection.SelectedTroop != "" {
                     // Use selected troop from the troop selection system
                     g.TroopSelection.DeploySelectedTroop(g, col, row, 1)
                 } else {
