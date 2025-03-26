@@ -29,7 +29,7 @@ The game data (cards, arenas, etc.) was sourced from the [smlbiobot/cr-csv](http
 
 ```bash
 # Clone this repository
-git clone https://github.com/yourusername/clashforge.git
+git clone https://github.com/Basilm9/ClashForge.git
 cd clashforge
 
 # Build the server
